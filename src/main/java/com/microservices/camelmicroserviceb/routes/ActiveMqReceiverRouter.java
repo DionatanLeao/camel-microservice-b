@@ -15,7 +15,7 @@ import com.microservices.camelmicroserviceb.CurrencyExchange;
  *
  */
 
-@Component
+//@Component
 public class ActiveMqReceiverRouter extends RouteBuilder{
 		
 //	@Autowired
