@@ -3,10 +3,8 @@ package com.microservices.camelmicroserviceb.routes;
 import java.math.BigDecimal;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.microservices.camelmicroserviceb.CurrencyExchange;
@@ -20,11 +18,11 @@ import com.microservices.camelmicroserviceb.CurrencyExchange;
 @Component
 public class ActiveMqReceiverRouter extends RouteBuilder{
 		
-	@Autowired
-	private MyCurrencyExchangeProcessor myCurrencyExchangeProcessor;
-	
-	@Autowired
-	private MyCurrencyExchangeTransformer myCurrencyExchangeTransformer;
+//	@Autowired
+//	private MyCurrencyExchangeProcessor myCurrencyExchangeProcessor;
+//	
+//	@Autowired
+//	private MyCurrencyExchangeTransformer myCurrencyExchangeTransformer;
 	
 	@Override
 	public void configure() throws Exception {
@@ -33,12 +31,16 @@ public class ActiveMqReceiverRouter extends RouteBuilder{
 		//CurrencyExchange
 		//{ "id": 1000, "from": "USD", "to": "INR", "conversionMultiple": 70 }
 		
-		from("activemq:my-active-mq-queue").
-			unmarshal().json(JsonLibrary.Jackson, CurrencyExchange.class).
-			bean(myCurrencyExchangeProcessor).
-			bean(myCurrencyExchangeTransformer).
-		to("log:received-message-from-active-mq");
+//		from("activemq:my-active-mq-queue").
+//			unmarshal().json(JsonLibrary.Jackson, CurrencyExchange.class).
+//			bean(myCurrencyExchangeProcessor).
+//			bean(myCurrencyExchangeTransformer).
+//		to("log:received-message-from-active-mq");
 		
+		from("activemq:my-active-mq-xml-queue").
+			unmarshal().
+			jacksonxml(CurrencyExchange.class).
+		to("log:received-message-from-active-mq");
 	}
 
 }
