@@ -15,7 +15,7 @@ import com.microservices.camelmicroserviceb.CurrencyExchange;
  *
  */
 
-//@Component
+@Component
 public class ActiveMqReceiverRouter extends RouteBuilder{
 		
 //	@Autowired
@@ -37,9 +37,12 @@ public class ActiveMqReceiverRouter extends RouteBuilder{
 //			bean(myCurrencyExchangeTransformer).
 //		to("log:received-message-from-active-mq");
 		
-		from("activemq:my-active-mq-xml-queue").
-			unmarshal().
-			jacksonxml(CurrencyExchange.class).
+//		from("activemq:my-active-mq-xml-queue").
+//			unmarshal().
+//			jacksonxml(CurrencyExchange.class).
+//		to("log:received-message-from-active-mq");
+		
+		from("activemq:split-queue").
 		to("log:received-message-from-active-mq");
 	}
 
